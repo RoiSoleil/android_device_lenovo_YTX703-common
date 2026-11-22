@@ -49,8 +49,10 @@ non-Treble) maintenu jusqu'à Android 16 par aoleary :
 - `Snap` → `Aperture`, `camera.device@3.2` → `camera.device@3.4`.
 - `keymaster@3.0` + `gatekeeper@1.0` → `android.hardware.security.keymint-service`
   + `com.android.hardware.gatekeeper.nonsecure`.
-- `vibrator@1.0` → `android.hardware.vibrator-service.msm8952` (AIDL, à écrire).
-- `light@2.0` → `android.hardware.light-service.msm8952` (AIDL, à écrire).
+- `vibrator@1.0` supprimé (la tablette n'a pas de moteur de vibration).
+- `light@2.0` → `android.hardware.light-service.msm8952` : nouvelle
+  implémentation AIDL (`hardware/liblight/aidl/`), backlight LCD + LED verte
+  de notifications, mêmes chemins sysfs que l'ancien HAL HIDL.
 - `health@2.1` → `android.hardware.health-service.qti`.
 - `wifi@1.0-service` → `android.hardware.wifi-service` (AIDL).
 - `usb@1.0` → `android.hardware.usb@1.3-service.basic`.
@@ -117,12 +119,8 @@ Points d'attention :
 
 ### 2. HALs AIDL à écrire (dans le device tree)
 
-- `android.hardware.light-service.msm8952` : porter `hardware/liblight`
-  (HIDL 2.0) vers l'interface AIDL `android.hardware.light.ILights`.
-  Modèle : `aoleary/device_lge_g4-common` → `aidl/vibrator/` (structure),
-  et `hardware/interfaces/light/aidl`.
-- `android.hardware.vibrator-service.msm8952` : même chose, modèle direct
-  `aoleary/device_lge_g4-common/aidl/vibrator/`.
+- `android.hardware.light-service.msm8952` : **fait** (voir `hardware/liblight/aidl/`).
+- `android.hardware.vibrator-service.*` : **non nécessaire** (pas de vibreur).
 - Sensors : `android.hardware.sensors-service.multihal` (AOSP) charge
   `sensors.msm8952.so` via `_hals.conf` ; notre `hardware/sensors/` in-tree
   (HIDL 1.0) doit être remplacé par le multihal AOSP + le blob.

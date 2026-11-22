@@ -236,10 +236,8 @@ PRODUCT_PACKAGES += \
     android.hardware.security.keymint-service \
     com.android.hardware.gatekeeper.nonsecure
 
-# Vibrator (AIDL, replaces removed vibrator@1.0)
-PRODUCT_PACKAGES += \
-    android.hardware.vibrator-service.msm8952
-
+# Vibrator: the Yoga Tab 3 Plus has no vibration motor, so no vibrator HAL
+# is shipped. (vibrator@1.0 was removed from AOSP anyway.)
 # Lineage Health
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
