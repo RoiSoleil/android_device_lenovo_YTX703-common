@@ -74,7 +74,19 @@ non-Treble) maintenu jusqu'à Android 16 par aoleary :
 
 ### 1. Kernel : backport eBPF (bloquant)
 
-Sans ce backport, aucun build Android ≥ 12 ne boote sur 3.10.
+**État : fait sur une branche expérimentale locale** (`wip/android16-bpf` à
+pousser sur `RoiSoleil/android_kernel_lenovo_msm8976`) :
+
+- les ~836 commits de la série ont été appliqués avec `cherry-pick -x`
+  (2 conflits résolus, 1 commit cgroup sauté)
+- `scripts/gcc-wrapper.py` porté en Python 3 (le toolchain GCC 4.9 prebuilt est
+  un wrapper Python 2)
+- defconfig : `CONFIG_BPF*`, `CONFIG_MEMCG=y`, désactivation de
+  `CONFIG_GET_HARDWARE_INFO` (conflit camera) et de BFQ (API cgroup obsolète)
+- `kernel/bpf/core.c` : include de `<linux/module.h>`
+- build hôte : `HOSTCFLAGS="-fcommon -O2"` (dtc vs GCC 10+)
+
+Voir `BUILD_NOTES.md` et `BPF_BACKPORT.md` dans le repo kernel.
 
 Base de référence : https://github.com/aoleary/kernel_leeco_msm8976-bpf
 (même SoC msm8976, kernel 3.10.108, ~836 commits de backport).

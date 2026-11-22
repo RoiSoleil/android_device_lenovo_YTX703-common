@@ -70,6 +70,11 @@ TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 # 3.10 has no module loading from a vendor partition
 NEED_KERNEL_MODULE_SYSTEM := true
+# Host toolchain quirks on modern distros:
+#  - GCC 10+ defaults to -fno-common, which breaks the bundled dtc
+#  - the prebuilt GCC 4.9 "aarch64-linux-android-gcc" is a Python 2 wrapper
+KERNEL_MAKE_FLAGS += HOSTCFLAGS="-fcommon -O2"
+KERNEL_MAKE_FLAGS += REAL_CC=$(shell pwd)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/real-aarch64-linux-android-gcc
 
 # Boot image
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x4000000
