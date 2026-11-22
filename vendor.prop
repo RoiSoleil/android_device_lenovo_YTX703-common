@@ -1,0 +1,18 @@
+#
+# Copyright (C) 2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Vendor properties for the non-Treble /system/vendor build.
+# Keep this file minimal: device properties that used to live in
+# system.prop but must be visible from vendor now belong here.
+
+# Graphics
+ro.vendor.qti.games.gt.prof=1
+
+# Media
+vendor.media.omx=1
+
+# WLAN
+wifi.interface=wlan0
