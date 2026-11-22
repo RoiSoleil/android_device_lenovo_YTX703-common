@@ -3,21 +3,25 @@ soong_namespace {
 
 // Symlinks that used to be created by BOARD_VENDOR_EXTRA_SYMLINKS
 // (vendor/lineage/build/tasks/target_symlinks.mk), which no longer exists.
+//
+// This is a non-Treble build: the vendor tree is installed under
+// /system/vendor (/vendor is a symlink to it), so the paths below are
+// explicit.
 
 install_symlink {
     name: "WCNSS_qcom_cfg_ini_symlink",
-    installed_location: "vendor/firmware/wlan/prima/WCNSS_qcom_cfg.ini",
-    symlink_target: "/vendor/etc/wifi/WCNSS_qcom_cfg.ini",
+    installed_location: "system/vendor/firmware/wlan/prima/WCNSS_qcom_cfg.ini",
+    symlink_target: "/system/vendor/etc/wifi/WCNSS_qcom_cfg.ini",
 }
 
 install_symlink {
     name: "WCNSS_wlan_dictionary_dat_symlink",
-    installed_location: "vendor/firmware/wlan/prima/WCNSS_wlan_dictionary.dat",
-    symlink_target: "/vendor/etc/wifi/WCNSS_wlan_dictionary.dat",
+    installed_location: "system/vendor/firmware/wlan/prima/WCNSS_wlan_dictionary.dat",
+    symlink_target: "/system/vendor/etc/wifi/WCNSS_wlan_dictionary.dat",
 }
 
 install_symlink {
     name: "WCNSS_qcom_wlan_nv_bin_symlink",
-    installed_location: "vendor/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin",
-    symlink_target: "/vendor/etc/wifi/WCNSS_qcom_wlan_nv.bin",
+    installed_location: "system/vendor/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin",
+    symlink_target: "/system/vendor/etc/wifi/WCNSS_qcom_wlan_nv.bin",
 }
