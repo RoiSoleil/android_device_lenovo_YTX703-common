@@ -196,14 +196,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
 
-# Audio
-PRODUCT_PACKAGES += \
-    android.hardware.audio@7.0 \
-    android.hardware.audio@7.0-impl \
-    android.hardware.audio.effect@7.0 \
-    android.hardware.audio.effect@7.0-impl \
-    android.hardware.soundtrigger@2.2-impl
-
 # Netutils
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0 \
