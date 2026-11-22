@@ -74,8 +74,10 @@ non-Treble) maintenu jusqu'à Android 16 par aoleary :
 
 ### 1. Kernel : backport eBPF (bloquant)
 
-**État : fait sur une branche expérimentale locale** (`wip/android16-bpf` à
-pousser sur `RoiSoleil/android_kernel_lenovo_msm8976`) :
+**État : backport appliqué et kernel compilé** — branche
+`wip/android16-bpf` de `RoiSoleil/android_kernel_lenovo_msm8976`
+(`Image.gz-dtb` 30 Mo, 185 symboles eBPF, `CONFIG_BPF_SYSCALL=y`,
+`CONFIG_CGROUP_BPF=y`, `CONFIG_MEMCG=y`).
 
 - les ~836 commits de la série ont été appliqués avec `cherry-pick -x`
   (2 conflits résolus, 1 commit cgroup sauté)
@@ -85,8 +87,16 @@ pousser sur `RoiSoleil/android_kernel_lenovo_msm8976`) :
   `CONFIG_GET_HARDWARE_INFO` (conflit camera) et de BFQ (API cgroup obsolète)
 - `kernel/bpf/core.c` : include de `<linux/module.h>`
 - build hôte : `HOSTCFLAGS="-fcommon -O2"` (dtc vs GCC 10+)
+- warnings non bloquantes (le wrapper GCC Android les transformait en erreurs)
+- `sysfs_get_dirent()` du mdss adapté à l'API kernfs
+- callback cgroup HMP migrés vers l'API `css`
+- deuxième driver Synaptics désactivé (collision de symboles)
 
 Voir `BUILD_NOTES.md` et `BPF_BACKPORT.md` dans le repo kernel.
+
+Reste à faire côté kernel : activer `CONFIG_MODULES` pour avoir le JIT eBPF
+(`CONFIG_BPF_JIT`, `CONFIG_BPF_JIT_ALWAYS_ON`) ; l'interpréteur compile et
+fonctionne en attendant.
 
 Base de référence : https://github.com/aoleary/kernel_leeco_msm8976-bpf
 (même SoC msm8976, kernel 3.10.108, ~836 commits de backport).
@@ -177,8 +187,8 @@ mkdir -p device/lenovo
 git clone -b wip/lineage-23.2 https://github.com/RoiSoleil/android_device_lenovo_YTX703-common \
     device/lenovo/YTX703-common
 
-# Kernel (fork à créer : voir section 1)
-git clone -b lineage-23.2 https://github.com/RoiSoleil/android_kernel_lenovo_msm8976 \
+# Kernel (backport eBPF déjà appliqué et compilé)
+git clone -b wip/android16-bpf https://github.com/RoiSoleil/android_kernel_lenovo_msm8976 \
     kernel/lenovo/msm8976
 
 # Blobs
